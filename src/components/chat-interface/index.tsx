@@ -95,7 +95,7 @@ export const ChatInterface = ({
             placeholder="enter the message here"
             onChange={(e) => setCurrentMessage(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
+              if (e.key === "Enter") {
                 e.preventDefault();
                 handleSendMessage();
               }
