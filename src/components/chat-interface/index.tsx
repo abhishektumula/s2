@@ -13,6 +13,7 @@ export const ChatInterface = ({
   const [currentMessage, setCurrentMessage] = useState("");
   const [messages, setMessages] = useState<messageType[]>([]);
   const socketRef = useRef<WebSocket | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const socket = new WebSocket("ws://localhost:8000");
@@ -44,56 +45,69 @@ export const ChatInterface = ({
   }, [adminUser]);
 
   const handleSendMessage = () => {
-    if (currentMessage.trim() && socketRef.current?.readyState === WebSocket.OPEN) {
+    if (
+      currentMessage.trim() &&
+      socketRef.current?.readyState === WebSocket.OPEN
+    ) {
       setMessages((prevMessages) => [
         ...prevMessages,
         { username: adminUser, message: currentMessage },
       ]);
       socketRef.current?.send(currentMessage);
       setCurrentMessage("");
+      console.log("clicked");
     }
   };
 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="flex flex-col items-center justify-start gap-4 w-full">
-      {messages.map((each, idx) => (
-        <div
-          key={idx}
-          className={`w-full flex flex-row text-base font-semibold items-center ${
-            each.username === adminUser
-              ? "text-red-500 justify-end"
-              : "text-green-500 justify-start"
-          }`}
-        >
+      <div className="w-full min-h-screen flex flex-col gap-2">
+        {messages.map((each, idx) => (
           <div
-            className={`flex flex-row items-center px-4 py-2 border border-neutral-700 rounded-md`}
+            key={idx}
+            className={`w-full flex flex-row text-base font-semibold items-center ${
+              each.username === adminUser
+                ? "text-red-500 justify-end"
+                : "text-green-500 justify-start"
+            }`}
           >
-            {each.message}
+            <div
+              className={`flex flex-row items-center px-4 py-2 border border-neutral-700 rounded-md`}
+            >
+              {each.message}
+            </div>
           </div>
+        ))}
+        <div ref={bottomRef}></div>
+      </div>
+      <div className="fixed w-full max-w-2xl mx-auto bottom-2">
+        <div className="flex flex-row w-full items-center justify-center px-6">
+          <textarea
+            name=""
+            id=""
+            rows={1}
+            value={currentMessage}
+            className="border border-neutral-300 p-2 resize-none w-full"
+            placeholder="enter the message here"
+            onChange={(e) => setCurrentMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+              }
+            }}
+          ></textarea>
+          <button
+            className="py-2 px-4 border border-neutral-300"
+            onClick={handleSendMessage}
+          >
+            send
+          </button>
         </div>
-      ))}
-      <div className="flex flex-row items-center justify-center">
-        <textarea
-          name=""
-          id=""
-          rows={1}
-          value={currentMessage}
-          className="border border-neutral-300 p-2 resize-none"
-          placeholder="enter the message here"
-          onChange={(e) => setCurrentMessage(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              handleSendMessage();
-            }
-          }}
-        ></textarea>
-        <button
-          className="py-2 px-4 border border-neutral-300"
-          onClick={handleSendMessage}
-        >
-          send
-        </button>
       </div>
     </div>
   );

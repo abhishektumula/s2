@@ -41,6 +41,7 @@ export const handler = NextAuth({
           return {
             id: username,
             username: username,
+            name: username,
           };
         } else if (
           username === "user2" &&
@@ -50,6 +51,7 @@ export const handler = NextAuth({
           return {
             id: username,
             username: username,
+            name: username,
           };
         } else {
           return null;

@@ -1,6 +1,6 @@
+import { NavBar } from "@/components/bars";
 import { ChatInterface } from "@/components/chat-interface";
 import { Container } from "@/components/container";
-import { LogOut } from "@/components/cred-page/logout";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -14,14 +14,17 @@ export default async function ChatPage() {
   if (!session) {
     redirect("/");
   }
+  const adminUser = session.user?.name;
   return (
     <div className="text-md">
-      <Container className="mx-auto bg-amber-50 text-black p-4">
+      <Container className="mx-auto bg-amber-50 text-black px-4">
         <div className="w-full">
-          <LogOut />
+          <NavBar adminUser={adminUser} />
         </div>
         <div className="flex flex-col min-h-screen items-center justify-start gap-6">
-          This is fucking protected page.Get your ass out of here.
+          <p className="text-base text-red-600">
+            This is fucking protected page.Get your ass out of here.
+          </p>
           <ChatInterface adminUser={session.user?.name} />
         </div>
       </Container>
