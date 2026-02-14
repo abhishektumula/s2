@@ -9,12 +9,68 @@ export type messageType = {
   message: string;
 };
 
+type WsIncoming =
+  | {
+      type: "welcome";
+      message: string;
+    }
+  | {
+      type: "error";
+      code: string;
+      message: string;
+    }
+  | {
+      type: "pong";
+      ts: number;
+    }
+  | {
+      type: "chat";
+      roomId: string;
+      text: string;
+      ts: number;
+    };
+
+type WsOutgoing =
+  | {
+      type: "ping";
+    }
+  | {
+      type: "chat";
+      roomId: string;
+      text: string;
+      username: string;
+    };
+
 type MatchKind = "boy-1" | "boy-2" | "love";
 
 type MatchRange = {
   start: number;
   end: number;
   kind: MatchKind;
+};
+
+const resolveWsUrl = (): string => {
+  const raw = (process.env.NEXT_PUBLIC_WS_URL || "").trim();
+
+  if (raw) {
+    if (raw.startsWith("wss://") || raw.startsWith("ws://")) {
+      return raw;
+    }
+    if (raw.startsWith("https://")) {
+      return raw.replace("https://", "wss://");
+    }
+    if (raw.startsWith("http://")) {
+      return raw.replace("http://", "ws://");
+    }
+    return `wss://${raw}`;
+  }
+
+  if (typeof window !== "undefined") {
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    return `${protocol}://${window.location.host}`;
+  }
+
+  return "ws://localhost:8000";
 };
 
 const escapeRegExp = (value: string) =>
@@ -119,25 +175,44 @@ export const ChatInterface = ({
   const [messages, setMessages] = useState<messageType[]>([]);
   const socketRef = useRef<WebSocket | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const roomIdRef = useRef("lobby");
 
   useEffect(() => {
     onConnectionStateChange("connecting");
 
-    const socket = new WebSocket("ws://localhost:8000");
+    if (typeof window !== "undefined") {
+      const roomIdFromQuery =
+        new URLSearchParams(window.location.search).get("roomId")?.trim() || "";
+      roomIdRef.current = roomIdFromQuery || "lobby";
+    }
+
+    const socket = new WebSocket(resolveWsUrl());
     socketRef.current = socket;
 
     socket.onopen = () => {
       onConnectionStateChange("connected");
+      const pingPayload: WsOutgoing = { type: "ping" };
+      socket.send(JSON.stringify(pingPayload));
     };
 
     socket.onmessage = (e) => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          username: "Remote User",
-          message: e.data,
-        },
-      ]);
+      let payload: WsIncoming | null = null;
+
+      try {
+        payload = JSON.parse(e.data) as WsIncoming;
+      } catch {
+        return;
+      }
+
+      if (payload.type === "chat" && payload.roomId === roomIdRef.current) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            username: "Remote User",
+            message: payload.text,
+          },
+        ]);
+      }
     };
 
     socket.onerror = () => {
@@ -162,7 +237,13 @@ export const ChatInterface = ({
         ...prevMessages,
         { username: adminUser, message: currentMessage },
       ]);
-      socketRef.current?.send(currentMessage);
+      const payload: WsOutgoing = {
+        type: "chat",
+        roomId: roomIdRef.current,
+        text: currentMessage,
+        username: adminUser || "member",
+      };
+      socketRef.current?.send(JSON.stringify(payload));
       setCurrentMessage("");
     }
   };
