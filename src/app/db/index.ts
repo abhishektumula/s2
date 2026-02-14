@@ -6,12 +6,4 @@ const adapter = new PrismaPg({
   connectionString: connectionString ?? "",
 });
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
-
 export const client = new PrismaClient({ adapter });
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = client;
-}

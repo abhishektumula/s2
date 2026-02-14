@@ -36,7 +36,7 @@ export const CheckIn = () => {
         </div>
         <div className="w-full">
           <input
-            type="text"
+            type="password"
             className="w-full px-2 py-2 border border-neutral-600 rounded-md"
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
@@ -44,7 +44,7 @@ export const CheckIn = () => {
         </div>
         <div className="w-full">
           <input
-            type="text"
+            type="password"
             className="w-full px-2 py-2 border border-neutral-600 rounded-md"
             placeholder="security key"
             onChange={(e) => setSecretkey(e.target.value)}
@@ -52,7 +52,8 @@ export const CheckIn = () => {
         </div>
         <div className="flex flex-row justify-center items-center">
           <p className="text-xs text-center text-red-600">
-            Don't have an account? You cannot create one.Feel free to fuck off.
+            Don't have an account? You cannot create one.Feel free to clone the
+            repo and make you own chat applicaton.
           </p>
         </div>
         <div className="flex flex-row items-center justify-center p-4">

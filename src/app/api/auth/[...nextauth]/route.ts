@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { client } from "@/app/db/index";
+
 export type usersType = {
   username: string;
   password: string;
