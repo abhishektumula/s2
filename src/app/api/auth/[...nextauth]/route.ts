@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import { client } from "@/app/db/index";
 export type usersType = {
   username: string;
   password: string;
@@ -33,29 +33,30 @@ export const handler = NextAuth({
         const username = credentials?.username;
         const password = credentials?.password;
         const securekey = credentials?.securekey;
-        if (
-          username === "user1" &&
-          password === "password1" &&
-          securekey === "123"
-        ) {
-          return {
-            id: username,
-            username: username,
-            name: username,
-          };
-        } else if (
-          username === "user2" &&
-          password === "password2" &&
-          securekey === "123123"
-        ) {
-          return {
-            id: username,
-            username: username,
-            name: username,
-          };
-        } else {
+
+        if (!username || !password || !securekey) {
           return null;
         }
+
+        const user = await client.users.findUnique({
+          where: { username }, // assuming username is unique
+        });
+
+        if (!user) return null;
+
+        // If passwords are hashed (recommended)
+        const isPasswordValid = user.password === password;
+        const isSecureKeyValid = user.securekey === securekey;
+
+        if (!isPasswordValid || !isSecureKeyValid) {
+          return null;
+        }
+
+        return {
+          id: String(user.id),
+          name: user.username,
+          username: user.username,
+        };
       },
     }),
   ],
