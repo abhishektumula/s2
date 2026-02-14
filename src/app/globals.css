@@ -113,6 +113,38 @@ body {
   backdrop-filter: blur(5px);
 }
 
+.chat-ui-surface {
+  background-color: var(--chat-surface);
+}
+
+.chat-ui-other {
+  background-color: var(--chat-message-other);
+}
+
+.chat-ui-accent {
+  background-color: var(--chat-accent);
+}
+
+.chat-ui-border {
+  border-color: var(--chat-border);
+}
+
+.chat-ui-text {
+  color: var(--chat-text);
+}
+
+.chat-ui-muted {
+  color: var(--chat-muted);
+}
+
+.chat-ui-accent-text {
+  color: var(--chat-accent-text);
+}
+
+.chat-ui-placeholder::placeholder {
+  color: var(--chat-muted);
+}
+
 .chat-word-boy-one,
 .chat-word-boy-two,
 .chat-word-love {

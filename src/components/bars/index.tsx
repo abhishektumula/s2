@@ -34,13 +34,13 @@ export const NavBar = ({
     <header className="chat-shell rounded-md px-3 py-2.5 sm:px-4 sm:py-3 md:px-5 md:py-4">
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
-          <div className="flex h-9 min-w-0 items-center rounded-sm border border-[var(--chat-border)] bg-[var(--chat-surface)] px-2.5 sm:h-10 sm:px-3">
-            <h1 className="max-w-[96px] truncate text-[14px] font-semibold leading-5 text-[var(--chat-text)] sm:max-w-[128px] sm:text-[15px] md:max-w-[240px]">
+          <div className="chat-ui-surface chat-ui-border flex h-9 min-w-0 items-center rounded-sm border px-2.5 sm:h-10 sm:px-3">
+            <h1 className="chat-ui-text max-w-[96px] truncate text-[14px] font-semibold leading-5 sm:max-w-[128px] sm:text-[15px] md:max-w-[240px]">
               {adminUser || "admin"}
             </h1>
           </div>
 
-          <div className="flex h-9 shrink-0 items-center gap-1.5 rounded-sm border border-[var(--chat-border)] bg-[var(--chat-surface)] px-2 text-[11px] font-medium capitalize tracking-[0.01em] text-[var(--chat-muted)] sm:h-10 sm:gap-2 sm:px-2.5 sm:text-[12px] md:px-3 md:text-[13px]">
+          <div className="chat-ui-surface chat-ui-border chat-ui-muted flex h-9 shrink-0 items-center gap-1.5 rounded-sm border px-2 text-[11px] font-medium capitalize tracking-[0.01em] sm:h-10 sm:gap-2 sm:px-2.5 sm:text-[12px] md:px-3 md:text-[13px]">
             <span
               className="h-2 w-2 rounded-full sm:h-2.5 sm:w-2.5"
               style={{ backgroundColor: statusColor[connectionState] }}
@@ -51,7 +51,7 @@ export const NavBar = ({
 
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <div className="relative md:hidden">
-            <div className="flex h-9 w-9 items-center justify-center rounded-sm border border-[var(--chat-border)] bg-[var(--chat-surface)] text-[var(--chat-text)] sm:h-10 sm:w-10">
+            <div className="chat-ui-surface chat-ui-border chat-ui-text flex h-9 w-9 items-center justify-center rounded-sm border sm:h-10 sm:w-10">
               <IconPalette size={17} />
             </div>
             <select
@@ -71,7 +71,7 @@ export const NavBar = ({
           <select
             value={theme}
             onChange={(e) => onThemeChange(e.target.value as ChatTheme)}
-            className="hidden h-10 min-w-[190px] rounded-sm border border-[var(--chat-border)] bg-[var(--chat-surface)] px-3 text-[13px] font-medium text-[var(--chat-text)] outline-none transition focus:border-[var(--chat-accent)] md:block"
+            className="chat-ui-surface chat-ui-border chat-ui-text hidden h-10 min-w-[190px] rounded-sm border px-3 text-[13px] font-medium outline-none transition focus:border-[var(--chat-accent)] md:block"
             aria-label="Select theme"
           >
             {themeOptions.map((option) => (
@@ -82,7 +82,7 @@ export const NavBar = ({
           </select>
 
           <button
-            className="flex h-9 w-9 items-center justify-center rounded-sm border border-[var(--chat-border)] bg-[var(--chat-surface)] transition hover:opacity-90 sm:h-10 sm:w-10"
+            className="chat-ui-surface chat-ui-border flex h-9 w-9 items-center justify-center rounded-sm border transition hover:opacity-90 sm:h-10 sm:w-10"
             onClick={() => {
               signOut();
             }}

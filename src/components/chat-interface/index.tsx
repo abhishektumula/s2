@@ -179,9 +179,9 @@ export const ChatInterface = ({
         </h2>
       </div>
 
-      <div className="flex-1 space-y-2.5 overflow-y-auto rounded-md border border-[var(--chat-border)] bg-[var(--chat-surface)]/75 p-3 sm:space-y-3 sm:p-4 md:space-y-3.5 md:p-5 lg:p-6">
+      <div className="chat-ui-surface chat-ui-border flex-1 space-y-2.5 overflow-y-auto rounded-md border p-3 sm:space-y-3 sm:p-4 md:space-y-3.5 md:p-5 lg:p-6">
         {messages.length === 0 && (
-          <p className="text-sm leading-6 text-[var(--chat-muted)]">
+          <p className="chat-ui-muted text-sm leading-6">
             Start the conversation.
           </p>
         )}
@@ -197,8 +197,8 @@ export const ChatInterface = ({
               <div
                 className={`max-w-[90%] rounded-md px-3 py-2.5 text-[14px] leading-6 shadow-sm sm:max-w-[84%] sm:px-4 sm:text-[15px] sm:leading-7 md:max-w-[82%] md:px-5 md:py-3 ${
                   fromAdmin
-                    ? "bg-[var(--chat-accent)] text-[var(--chat-accent-text)]"
-                    : "border border-[var(--chat-border)] bg-[var(--chat-message-other)] text-[var(--chat-text)]"
+                    ? "chat-ui-accent chat-ui-accent-text"
+                    : "chat-ui-other chat-ui-border chat-ui-text border"
                 }`}
               >
                 <p>{renderAnimatedMessage(each.message, loverName)}</p>
@@ -209,12 +209,12 @@ export const ChatInterface = ({
         <div ref={bottomRef} />
       </div>
 
-      <div className="mt-3 rounded-md border border-[var(--chat-border)] bg-[var(--chat-surface)] p-2 sm:mt-4 sm:p-2.5 md:mt-5 md:p-3">
+      <div className="chat-ui-surface chat-ui-border mt-3 rounded-md border p-2 sm:mt-4 sm:p-2.5 md:mt-5 md:p-3">
         <div className="flex items-stretch gap-2">
           <textarea
             rows={1}
             value={currentMessage}
-            className="h-11 w-full resize-none rounded-sm border border-[var(--chat-border)] bg-transparent px-3 py-2.5 text-[14px] leading-5 text-[var(--chat-text)] outline-none placeholder:text-[var(--chat-muted)] sm:h-12 sm:py-3 sm:text-[15px]"
+            className="chat-ui-border chat-ui-placeholder chat-ui-text h-11 w-full resize-none rounded-sm border bg-transparent px-3 py-2.5 text-[14px] leading-5 outline-none sm:h-12 sm:py-3 sm:text-[15px]"
             placeholder="Enter the message here"
             onChange={(e) => setCurrentMessage(e.target.value)}
             onKeyDown={(e) => {
@@ -225,7 +225,7 @@ export const ChatInterface = ({
             }}
           />
           <button
-            className="h-11 shrink-0 rounded-sm border border-[var(--chat-border)] bg-[var(--chat-accent)] px-5 text-[14px] font-semibold text-[var(--chat-accent-text)] transition hover:brightness-95 sm:h-12 sm:px-6 sm:text-[15px]"
+            className="chat-ui-border chat-ui-accent chat-ui-accent-text h-11 shrink-0 rounded-sm border px-5 text-[14px] font-semibold transition hover:brightness-95 sm:h-12 sm:px-6 sm:text-[15px]"
             onClick={handleSendMessage}
           >
             send
