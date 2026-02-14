@@ -174,7 +174,7 @@ export const ChatInterface = ({
   return (
     <section className="chat-shell flex min-h-[70vh] flex-col rounded-md p-3 sm:p-4 md:min-h-[76vh] md:p-6 lg:p-7">
       <div className="mb-3 flex items-center justify-between sm:mb-4 md:mb-5">
-        <h2 className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--chat-muted)]">
+        <h2 className="text-[12px] font-semibold uppercase tracking-[0.18em] text-(--chat-muted)">
           chat room
         </h2>
       </div>

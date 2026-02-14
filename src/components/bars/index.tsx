@@ -35,7 +35,7 @@ export const NavBar = ({
       <div className="flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
           <div className="chat-ui-surface chat-ui-border flex h-9 min-w-0 items-center rounded-sm border px-2.5 sm:h-10 sm:px-3">
-            <h1 className="chat-ui-text max-w-[96px] truncate text-[14px] font-semibold leading-5 sm:max-w-[128px] sm:text-[15px] md:max-w-[240px]">
+            <h1 className="chat-ui-text max-w-24 truncate text-[14px] font-semibold leading-5 sm:max-w-32 sm:text-[15px] md:max-w-60">
               {adminUser || "admin"}
             </h1>
           </div>
@@ -71,7 +71,7 @@ export const NavBar = ({
           <select
             value={theme}
             onChange={(e) => onThemeChange(e.target.value as ChatTheme)}
-            className="chat-ui-surface chat-ui-border chat-ui-text hidden h-10 min-w-[190px] rounded-sm border px-3 text-[13px] font-medium outline-none transition focus:border-[var(--chat-accent)] md:block"
+            className="chat-ui-surface chat-ui-border chat-ui-text hidden h-10 min-w-47.5 rounded-sm border px-3 text-[13px] font-medium outline-none transition focus:border-(--chat-accent) md:block"
             aria-label="Select theme"
           >
             {themeOptions.map((option) => (
