@@ -22,5 +22,181 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+.chat-page-root {
+  --chat-bg: #f3efe8;
+  --chat-text: #1f1a16;
+  --chat-muted: #6f665b;
+  --chat-surface: #fffaf2;
+  --chat-border: #e5dacb;
+  --chat-accent: #5f4b32;
+  --chat-accent-text: #fffaf2;
+  --chat-message-other: #f8f1e7;
+
+  background: var(--chat-bg);
+  color: var(--chat-text);
+}
+
+.chat-theme-polimaders {
+  --chat-bg: #f4f8f2;
+  --chat-text: #1d2a20;
+  --chat-muted: #5e6f62;
+  --chat-surface: #ffffff;
+  --chat-border: #d4e0d5;
+  --chat-accent: #366447;
+  --chat-accent-text: #f6fbf7;
+  --chat-message-other: #eef5ef;
+}
+
+.chat-theme-fay {
+  --chat-bg: #fff8ef;
+  --chat-text: #2f241f;
+  --chat-muted: #7a6860;
+  --chat-surface: #fffdf8;
+  --chat-border: #ebdacd;
+  --chat-accent: #ca6f46;
+  --chat-accent-text: #fffaf5;
+  --chat-message-other: #fff2e8;
+}
+
+.chat-theme-claude {
+  --chat-bg: #f7f5f2;
+  --chat-text: #2a241d;
+  --chat-muted: #766c62;
+  --chat-surface: #fefdfb;
+  --chat-border: #e4ddd3;
+  --chat-accent: #c26d3f;
+  --chat-accent-text: #fff9f5;
+  --chat-message-other: #f4eee7;
+}
+
+.chat-theme-dark-cursor {
+  --chat-bg: #0d1014;
+  --chat-text: #ecf0f5;
+  --chat-muted: #9aa7b5;
+  --chat-surface: #11171d;
+  --chat-border: #273443;
+  --chat-accent: #3f90ff;
+  --chat-accent-text: #f2f7ff;
+  --chat-message-other: #141d26;
+}
+
+.chat-theme-dark-emerald {
+  --chat-bg: #000000;
+  --chat-text: #e7f8ee;
+  --chat-muted: #90a596;
+  --chat-surface: #070b09;
+  --chat-border: #1a2a20;
+  --chat-accent: #2ed66f;
+  --chat-accent-text: #03150c;
+  --chat-message-other: #0b130e;
+  background: #000000;
+}
+
+.chat-theme-dark-violet {
+  --chat-bg: #000000;
+  --chat-text: #f1ecff;
+  --chat-muted: #9f95bd;
+  --chat-surface: #090712;
+  --chat-border: #211b33;
+  --chat-accent: #9f63ff;
+  --chat-accent-text: #f6efff;
+  --chat-message-other: #100d1d;
+  background: #000000;
+}
+
+.chat-shell {
+  border: 1px solid var(--chat-border);
+  background: var(--chat-surface);
+  backdrop-filter: blur(5px);
+}
+
+.chat-word-boy-one,
+.chat-word-boy-two,
+.chat-word-love {
+  display: inline-block;
+  font-weight: 700;
+}
+
+.chat-word-boy-one {
+  animation: boyPop 0.8s ease-out infinite alternate;
+}
+
+.chat-word-boy-two {
+  animation: boySlide 1.2s ease-in-out infinite;
+}
+
+.chat-word-love {
+  position: relative;
+  color: #e14b75;
+  text-shadow: 0 0 8px color-mix(in srgb, #e14b75 45%, transparent);
+  animation: lovePulse 1s ease-in-out infinite;
+}
+
+.chat-word-love::after {
+  content: "♥";
+  position: absolute;
+  right: -12px;
+  top: -8px;
+  font-size: 10px;
+  opacity: 0.8;
+  animation: heartFloat 1.2s ease-out infinite;
+}
+
+@keyframes boyPop {
+  from {
+    transform: translateY(0) scale(1);
+    color: color-mix(in srgb, currentColor 85%, #4c79ff);
+  }
+
+  to {
+    transform: translateY(-1px) scale(1.04);
+    color: #4c79ff;
+  }
+}
+
+@keyframes boySlide {
+  0% {
+    transform: translateX(0);
+    text-shadow: none;
+  }
+
+  50% {
+    transform: translateX(1px);
+    text-shadow: 0 1px 9px color-mix(in srgb, #47a1ff 45%, transparent);
+  }
+
+  100% {
+    transform: translateX(0);
+    text-shadow: none;
+  }
+}
+
+@keyframes lovePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: translateY(2px) scale(0.9);
+    opacity: 0;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-8px) scale(1.1);
+    opacity: 0;
+  }
 }
